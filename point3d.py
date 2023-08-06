@@ -1,11 +1,10 @@
-#! /usr/bin/python
+#!/usr/bin/env python3
 
 import scurses.window as window
 import scurses.colors as colors
 from point_shapes.simple import *
 from math import *
 from itertools import repeat
-#import curses
 
 CHAR_DIMENSION_RATIO = 2
 FOG_START = 4.5
@@ -24,19 +23,19 @@ def point_c(res, w, h, z):
   return ln
 
 def color_pair_list():
-  return zip(range(255, MIN_BLACK-1, -1), repeat(colors.BLACK))
+  return list(zip(range(255, MIN_BLACK-1, -1), repeat(colors.BLACK)))
 
 def main(win):
-  colors.init(color_pair_list())  
-  
+  colors.init(color_pair_list())
+
   # LETTER A
   #letter  = line(-1.5, 3, 10, 0, -3, 10, 10)
   #letter += line(1.5, 3, 10, 0, -3, 10, 10)
   #letter += line(-.75, 0, 10, .75, 0, 10, 5)
-  
+
   # LETTER C
-  letter  = point_c(10+win.height/20, 3, 6, 10)
-  letter += point_c(10+win.height/20, 2.8, 5.6, 10)
+  letter  = point_c(10+win.height//20, 3, 6, 10)
+  letter += point_c(10+win.height//20, 2.8, 5.6, 10)
 
   letter  = PointObject(letter)
 
@@ -58,7 +57,7 @@ def main(win):
     letter_rot += .7*pi/TICK_RATE
     win.draw_string(0,0, "Quit - Ctrl+C")
     win.refresh()
-    win.sleep(1000/TICK_RATE)
+    win.sleep(1000 // TICK_RATE)
 
 
 def draw(points, view, win):
@@ -84,7 +83,7 @@ def get_color_pair(d):
 class PointObject(object):
   def __init__(self, points):
     self.points = points
-  
+
   def translated(self, dx, dy, dz):
     points = []
     for point in self.points:
